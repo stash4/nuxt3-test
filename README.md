@@ -1,3 +1,5 @@
+![publish workflow](https://github.com/stash4/nuxt3-test/actions/workflows/publish.yml/badge.svg?event=push)
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
