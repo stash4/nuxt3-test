@@ -6,6 +6,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      statuses: write
     name: Publish to Cloudflare Pages
     steps:
       - name: Checkout
@@ -23,6 +24,7 @@ jobs:
         run: npm run generate
 
       - name: Publish to Cloudflare Pages
+        id: cloudflare_pages_deploy
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -31,3 +33,18 @@ jobs:
           directory: ./dist
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add publish URL as commit status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              context: 'Cloudflare Pages',
+              description: 'Cloudflare Pages deployment',
+              state: 'success',
+              sha,
+              target_url: "${{ steps.cloudflare_pages_deploy.outputs.url }}",
+            });
