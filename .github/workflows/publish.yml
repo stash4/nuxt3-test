@@ -24,7 +24,9 @@ jobs:
         run: npm run generate
 
       - name: Set _headers file for Cloudflare Pages
-        run: echo -e "https://nuxt3-github-actions-test.pages.dev/*\n  X-Robots-Tag: noindex" > ./dist/_headers
+        run: |
+          echo -e "https://nuxt3-github-actions-test.pages.dev/*\n  X-Robots-Tag: noindex" \
+            > ./dist/_headers
 
       - name: Publish to Cloudflare Pages
         id: cloudflare_pages_deploy
