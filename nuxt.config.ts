@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   css: ['/assets/css/style.css'],
   app: {
     head: {
-      title: 'Nuxt3 test',
       meta: [{name: 'description', content: 'Nuxt3 for biginners'}],
       // link: [{rel: 'icon', href: ''}]
     },
